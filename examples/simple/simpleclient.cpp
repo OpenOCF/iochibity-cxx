@@ -39,7 +39,7 @@
 
 using namespace OC;
 
-static const char* SVR_DB_FILE_NAME = "./oic_svr_db_client.dat";
+static const char* SVR_DB_FILE_NAME = "./.data/oic_svr_db_client.dat";
 typedef std::map<OCResourceIdentifier, std::shared_ptr<OCResource>> DiscoveredResourceMap;
 
 DiscoveredResourceMap discoveredResources;

@@ -44,7 +44,7 @@ using namespace OC;
 using namespace std;
 namespace PH = std::placeholders;
 
-static const char* SVR_DB_FILE_NAME = "./oic_svr_db_server.dat";
+static const char* SVR_DB_FILE_NAME = "./.data/oic_svr_db_server.dat";
 int gObservation = 0;
 void * ChangeLightRepresentation (void *param);
 void * handleSlowResponse (void *param, std::shared_ptr<OCResourceRequest> pRequest);
