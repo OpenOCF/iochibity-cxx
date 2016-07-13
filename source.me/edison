@@ -1,0 +1,12 @@
+# source this file to setup the iotivity build environment on edison
+
+export IOTIVITY_HOST_OS=linux
+export IOTIVITY_HOST_ARCH=x86
+
+export IOTIVITY_TARGET_OS=linux
+export IOTIVITY_TARGET_ARCH=x86
+
+export IOTIVITY_STAGE=release
+
+export IOTIVITY_HOME=$HOME/iochibity
+export IOTIVITY_LIBPATH=${IOTIVITY_HOME}/out/${IOTIVITY_HOST_OS}/${IOTIVITY_TARGET_ARCH}/${IOTIVITY_STAGE}
