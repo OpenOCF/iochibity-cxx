@@ -78,6 +78,17 @@ public:
                     m_lightColor(0),m_lightHandle(nullptr),  m_fanState(false), m_fanSpeed(0),
                     m_fanHandle(nullptr)
     {
+        m_roomUri = "/a/room"; // URI of the resource
+        m_roomTypes.push_back("core.room"); // resource type name. In this case, it is light
+        m_roomInterfaces.push_back(DEFAULT_INTERFACE); // resource interface.
+        m_roomInterfaces.push_back(BATCH_INTERFACE); // resource interface.
+        m_roomInterfaces.push_back(LINK_INTERFACE); // resource interface.
+        m_roomRep.setValue("name", m_roomName);
+        m_roomRep.setUri(m_roomUri);
+        m_roomRep.setResourceTypes(m_roomTypes);
+        m_roomRep.setResourceInterfaces(m_roomInterfaces);
+
+
         m_lightUri = "/a/light"; // URI of the resource
         m_lightTypes.push_back("core.light"); // resource type name. In this case, it is light
         m_lightInterfaces.push_back(DEFAULT_INTERFACE); // resource interface.
@@ -98,15 +109,6 @@ public:
         m_fanRep.setValue("state", m_fanState);
         m_fanRep.setValue("speed", m_fanSpeed);
 
-        m_roomUri = "/a/room"; // URI of the resource
-        m_roomTypes.push_back("core.room"); // resource type name. In this case, it is light
-        m_roomInterfaces.push_back(DEFAULT_INTERFACE); // resource interface.
-        m_roomInterfaces.push_back(BATCH_INTERFACE); // resource interface.
-        m_roomInterfaces.push_back(LINK_INTERFACE); // resource interface.
-        m_roomRep.setValue("name", m_roomName);
-        m_roomRep.setUri(m_roomUri);
-        m_roomRep.setResourceTypes(m_roomTypes);
-        m_roomRep.setResourceInterfaces(m_roomInterfaces);
     }
 
     /// This function internally calls registerResource API.

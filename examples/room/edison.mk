@@ -14,13 +14,9 @@ CXXFLAGS = -g -std=c++11 -DWITH_POSIX -D__linux__ -m32 -fPIC -Wall -Wextra -Wno-
 
 LDFLAGS=-L$(IOTIVITY_LIBPATH)
 
-LDLIBS=-lcoap -lconnectivity_abstraction -loc_logger -loctbstack -loc -lpthread -lstdc++
+LDLIBS= -lstdc++ -lcoap -lconnectivity_abstraction -loc_logger -loctbstack -loc -lpthread
 
 all:	roomserver roomclient
-
-roomserver: roomserver.o
-
-roomrserver.o: roomrserver.cpp
 
 clean:
 	rm *.o roomserver roomclient
