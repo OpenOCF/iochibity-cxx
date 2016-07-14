@@ -1,4 +1,4 @@
-
+CC=g++
 CXX=g++
 
 INC=-I$(IOTIVITY_HOME)/resource/include \
@@ -17,11 +17,7 @@ LDFLAGS=-L$(IOTIVITY_LIBPATH)
 # OSX must use either -lc++ or -lstdc++, -std=libstc++ not enough
 LDLIBS=-lcoap -lconnectivity_abstraction -loc_logger -loctbstack -loc -lpthread -lstdc++
 
-all:	roomserver roomclient
-
-roomserver: roomserver.o
-
-roomrserver.o: roomrserver.cpp
+all:	simpleclientHQ simpleserverHQ
 
 clean:
-	rm *.o *.dat roomserver roomclient
+	rm *.o simpleclientHQ simpleserverHQ
