@@ -7,19 +7,19 @@ install_name_tool \
     -change \
     out/darwin/x86_64/release/resource/oc_logger/liboc_logger.dylib \
     $IOTIVITY_LIBPATH/resource/oc_logger/liboc_logger.dylib \
-    roomserver
+    simpleserverHQ
 
 install_name_tool \
     -change \
     out/darwin/x86_64/release/resource/csdk/liboctbstack.dylib \
     $IOTIVITY_LIBPATH/liboctbstack.dylib \
-    roomserver
+    simpleserverHQ
 
 install_name_tool \
     -change \
     out/darwin/x86_64/release/resource/src/liboc.dylib \
     $IOTIVITY_LIBPATH/liboc.dylib \
-    roomserver
+    simpleserverHQ
 
 # client
 # server
@@ -27,17 +27,17 @@ install_name_tool \
     -change \
     out/darwin/x86_64/release/resource/oc_logger/liboc_logger.dylib \
     $IOTIVITY_LIBPATH/resource/oc_logger/liboc_logger.dylib \
-    roomclient
+    simpleclientHQ
 
 install_name_tool \
     -change \
     out/darwin/x86_64/release/resource/csdk/liboctbstack.dylib \
     $IOTIVITY_LIBPATH/liboctbstack.dylib \
-    roomclient
+    simpleclientHQ
 
 install_name_tool \
     -change \
     out/darwin/x86_64/release/resource/src/liboc.dylib \
     $IOTIVITY_LIBPATH/liboc.dylib \
-    roomclient
+    simpleclientHQ
 
