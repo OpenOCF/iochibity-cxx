@@ -1,0 +1,95 @@
+#******************************************************************
+#
+# Copyright 2014 Intel Mobile Communications GmbH All Rights Reserved.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+##
+# liboc_logger (share library) build script
+##
+
+import os
+Import('env')
+
+lib_env = env.Clone()
+# SConscript('#resource/third_party_libs.scons', 'lib_env')
+
+local_env = lib_env.Clone()
+
+install_sysroot = local_env.get('INSTALL_SYSROOT')
+source_root     = env.get('SOURCE_ROOT')
+######################################################################
+# Build flags
+######################################################################
+local_env.PrependUnique(CPPPATH = [source_root + '/resource/c_common',
+                                   '#src/oc_logger'])
+
+target_os = env.get('TARGET_OS')
+if target_os == 'android':
+	local_env.AppendUnique(CXXFLAGS = ['-frtti', '-fexceptions'])
+	local_env.AppendUnique(LIBS = ['gnustl_shared', 'log'])
+	local_env.AppendUnique(LINKFLAGS = ['-Wl,-soname,liboc_logger.so'])
+
+if target_os not in ['arduino', 'windows']:
+	local_env.AppendUnique(CFLAGS = ['-Wall', '-std=c99', '-fPIC'])
+	local_env.AppendUnique(CXXFLAGS = ['-Wall', '-std=c++0x', '-fPIC'])
+
+if target_os not in ['darwin', 'ios', 'windows', 'msys_nt']:
+	local_env.AppendUnique(LINKFLAGS = ['-Wl,--no-undefined'])
+
+local_env.AppendUnique(LIBPATH = [os.path.join(local_env.get('BUILD_DIR'), 'c_common')])
+local_env.AppendUnique(LIBS = ['c_common'])
+
+######################################################################
+# Source files and Targets
+######################################################################
+
+oc_logger_libs = []
+
+if target_os in ['windows', 'msys_nt']:
+	# TODO: Add OC_EXPORT API prefixes to enable oc_logger DLL generation.
+	oc_logger_libs += local_env.StaticLibrary('oc_logger',
+		['oc_logger.c', 'oc_console_logger.c', 'oc_ostream_logger.cpp'])
+else:
+	oc_logger_libs += Flatten(local_env.SharedLibrary('oc_logger_core',
+		['oc_logger.c'],  OBJPREFIX='core_'))
+	oc_logger_libs += Flatten(local_env.SharedLibrary('oc_logger',
+		['oc_logger.c', 'oc_console_logger.c', 'oc_ostream_logger.cpp']))
+
+# local_env.InstallTarget(oc_logger_libs, 'oc_logger')
+# local_env.UserInstallTargetLib(oc_logger_libs, 'oc_logger')
+
+dylib = local_env.InstallVersionedLib(target=local_env.get('BUILD_SYSROOT') + '/cxx',
+                                             source=oc_logger_libs)
+
+Alias('logger', dylib)
+
+
+# dylib = local_env.InstallVersionedLib(target=env.get('BUILD_SYSROOT') + '/cxx',
+#                                              source=oc_logger_libs)
+
+# local_env.UserInstallTargetHeader('oc_logger.hpp', 'resource', 'oc_logger.hpp')
+# local_env.UserInstallTargetHeader('oc_logger.h', 'resource', 'oc_logger.h')
+# local_env.UserInstallTargetHeader('oc_logger_types.h', 'resource', 'oc_logger_types.h')
+# local_env.UserInstallTargetHeader('oc_log_stream.hpp', 'resource', 'oc_log_stream.hpp')
+# local_env.UserInstallTargetHeader('targets/oc_console_logger.h', 'resource/targets', 'oc_console_logger.h')
+# local_env.UserInstallTargetHeader('targets/oc_ostream_logger.h', 'resource/targets', 'oc_ostream_logger.h')
+
+# if target_os not in ['ios', 'android']:
+# 	SConscript('examples/SConscript')
+
+local_env.Install(install_sysroot + '/lib', dylib)
