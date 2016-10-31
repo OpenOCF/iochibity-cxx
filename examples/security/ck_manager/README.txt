@@ -1,3 +1,5 @@
+original: resource/csdk/security/provisioning/ck_manager/sample
+
 # Open three terminal windows in linux
 # The first one use for start Light server
 # Note: Here and below $PROJ_DIR is root directory of iotivity project (e.g /path/to/iotivity)

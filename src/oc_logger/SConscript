@@ -82,6 +82,18 @@ Alias('logger', dylib)
 # dylib = local_env.InstallVersionedLib(target=env.get('BUILD_SYSROOT') + '/cxx',
 #                                              source=oc_logger_libs)
 
+headers = ['oc_logger.hpp',
+           'oc_logger.h',
+           'oc_logger_types.h',
+           'oc_log_stream.hpp']
+
+local_env.Install(install_sysroot + '/include', headers)
+
+local_env.Install(install_sysroot + '/include/targets',
+                  ['targets/oc_console_logger.h',
+                   'targets/oc_ostream_logger.h'])
+
+
 # local_env.UserInstallTargetHeader('oc_logger.hpp', 'resource', 'oc_logger.hpp')
 # local_env.UserInstallTargetHeader('oc_logger.h', 'resource', 'oc_logger.h')
 # local_env.UserInstallTargetHeader('oc_logger_types.h', 'resource', 'oc_logger_types.h')
